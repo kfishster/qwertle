@@ -1,4 +1,4 @@
-import { cluesUsed, GameSettings, GameState, getGuesses, isGameFinished } from "../models/AppState";
+import { GameSettings, GameState, getGuesses, isGameFinished } from "../models/AppState";
 import { BoardRow } from "./BoardRow";
 
 type Props = {
