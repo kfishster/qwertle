@@ -1,0 +1,17 @@
+export const Constants = {
+    'inSolution': 'bg-mainframe-yellow',
+    'substringBackground': 'bg-yellow-400',
+    'inPosition': 'bg-mainframe-green',
+    'usedLetterBoard': 'bg-lime-900 opacity-80',
+    'usedLetterKey': 'bg-lime-900 opacity-30',
+    'hoverKey': 'hover:bg-lime-900',
+    'defaultBackground': '',
+    'defaultTextColor': 'text-zinc-800',
+    'highlightedTextColor': 'text-lime-600',
+    'borderColor': 'border-lime-600',
+    'wordLength': 5,
+    'maxNumGuesses': 6,
+    'keyboardClue1': 'bg-lime-500',
+    'keyboardClue2': 'bg-lime-700',
+    'keyboardClue3': 'bg-lime-900',
+};
