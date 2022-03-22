@@ -9,6 +9,7 @@ import { addLetterToGameState, AppState, cluesUsed, GameStatus, getDefaultAppSta
 import { Settings } from './components/screens/Settings';
 import { Result } from './components/screens/Result';
 import { About } from './components/screens/About';
+import Div100vh from 'react-div-100vh';
 
 
 function getAppState(): AppState {
@@ -218,46 +219,48 @@ class App extends React.Component<{}, AppState> {
     const cluesUsedInGame = cluesUsed(model.settings);
 
     return (
-      <div className="flex h-screen flex-col bg-zinc-800" onKeyDown={handleKeyDown} tabIndex={0}>
-        {/* toolbar */}
-        <div className={`flex flex-col h-full pb-4 pt-4 items-center gap-6 transition-all ${overlayOpen ? "blur-lg" : ""}`}>
-          <div className="flex w-full">
-            <Toolbar 
-              gameFinished={isGameFinished(model.game.status)}
-              cluesEnabled={cluesUsedInGame} 
-              openResults={openResult} 
-              openAbout={openAbout} 
-              finishedAnimation={finishedWrongWordAnimation} 
-              openSettings={openSettings}
-              practice={model.practice}
-              togglePractice={togglePractice} 
-              refreshPractice={resetPractice}/>
+      <Div100vh>
+        <div className="flex h-full flex-col bg-zinc-800" onKeyDown={handleKeyDown} tabIndex={0}>
+          {/* toolbar */}
+          <div className={`flex flex-col h-full pb-4 pt-4 items-center gap-6 transition-all ${overlayOpen ? "blur-lg" : ""}`}>
+            <div className="flex w-full">
+              <Toolbar 
+                gameFinished={isGameFinished(model.game.status)}
+                cluesEnabled={cluesUsedInGame} 
+                openResults={openResult} 
+                openAbout={openAbout} 
+                finishedAnimation={finishedWrongWordAnimation} 
+                openSettings={openSettings}
+                practice={model.practice}
+                togglePractice={togglePractice} 
+                refreshPractice={resetPractice}/>
+            </div>
+            {/* board */}
+            <div className="flex">
+              <Board 
+                game={model.game}
+                settings={model.settings}
+                showWordNotFound={model.showWordNotFound}
+                finishedAnimation={finishedWrongWordAnimation}/>
+            </div>
+            {/* keyboard */}
+            <div className="flex mt-auto w-full justify-center h-1/4">
+              <Keyboard 
+                model={model.keyboard}
+                solution={model.game.solution}
+                showKeyboardHeatmap={model.settings.showKeyboardHeatmap} 
+                addLetter={addLetter} 
+                removeLetter={removeLetter} 
+                submitGuess={submit}
+              />
+            </div>
           </div>
-          {/* board */}
-          <div className="flex">
-            <Board 
-              game={model.game}
-              settings={model.settings}
-              showWordNotFound={model.showWordNotFound}
-              finishedAnimation={finishedWrongWordAnimation}/>
-          </div>
-          {/* keyboard */}
-          <div className="flex mt-auto w-full justify-center h-1/4">
-            <Keyboard 
-              model={model.keyboard}
-              solution={model.game.solution}
-              showKeyboardHeatmap={model.settings.showKeyboardHeatmap} 
-              addLetter={addLetter} 
-              removeLetter={removeLetter} 
-              submitGuess={submit}
-            />
-          </div>
+          {/* <div className={`${model.settings.isSettingsOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-700 absolute h-full w-full flex justify-center items-center`}><Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/></div> */}
+          {model.modals.settingsOpen && <Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/>}
+          {model.modals.resultsOpen && <Result game={model.game} practice={model.practice} settings={model.settings} closeResult={closeResult}/>}
+          {model.modals.aboutOpen && <About closeAbout={closeAbout}/>}
         </div>
-        {/* <div className={`${model.settings.isSettingsOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-700 absolute h-full w-full flex justify-center items-center`}><Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/></div> */}
-        {model.modals.settingsOpen && <Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/>}
-        {model.modals.resultsOpen && <Result game={model.game} practice={model.practice} settings={model.settings} closeResult={closeResult}/>}
-        {model.modals.aboutOpen && <About closeAbout={closeAbout}/>}
-      </div>
+      </Div100vh>
     );
   }
 }
