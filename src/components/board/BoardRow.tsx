@@ -47,7 +47,7 @@ export const BoardRow = ({ showSubstrings, smallDemo, guess, currentGuess, gameF
     const emptyRow = Array.from(Array(cells).keys()).map(i => <BoardCell key={i} smallDemo={smallDemo}/>);
     
     return (
-        <div className={`flex flex-row justify-center ${smallDemo ? "gap-1" : "gap-2"} ${showWordNotFound ? "animate-wiggle" : ""}`} onAnimationEnd={finishedAnimation}>
+        <div className={`flex justify-center flex-row w-full ${smallDemo ? "gap-1" : "gap-2"} ${showWordNotFound ? "animate-wiggle" : ""}`} onAnimationEnd={finishedAnimation}>
             { guess == null 
                 ? (currentGuess == null 
                     ? emptyRow 

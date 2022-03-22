@@ -31,7 +31,8 @@ function getLetterColor(letterGuess: LetterGuess | undefined, currentGuessLetter
 export const BoardCell = ({ letterGuess, currentGuessLetter, cursor, smallDemo }: Props) => {
     // console.log(smallDemo);
     return (
-        <div className={`flex ${letterGuess && "transition-color ease-out duration-1000"} justify-center items-center box-border ${smallDemo ? "h-8 w-8 border-1 text-xl" : "h-16 w-16 border-2 text-3xl"} font-mono border-dashed rounded-sm font-semibold ${Constants.borderColor} ${getLetterBackground(letterGuess)} ${getLetterColor(letterGuess, currentGuessLetter)}`}>
+        // <div className={`flex ${letterGuess && "transition-all ease-out duration-1000"} justify-center items-center box-border ${smallDemo ? "h-8 w-8 border-1 text-xl" : "h-14 w-14 md:h-16 md:w-16 lg:h-20 lg:w-20 border-2 text-2xl md:text-3xl lg:text-4xl"} font-mono border-dashed rounded-sm font-semibold ${Constants.borderColor} ${getLetterBackground(letterGuess)} ${getLetterColor(letterGuess, currentGuessLetter)}`}></div>
+        <div className={`flex aspect-square flex-1 ${letterGuess && "transition-all ease-out duration-1000"} justify-center items-center box-border ${smallDemo ? "h-8 w-8 border-1 text-xl" : "border-2 text-2xl md:text-3xl lg:text-4xl"} font-mono border-dashed rounded-sm font-semibold ${Constants.borderColor} ${getLetterBackground(letterGuess)} ${getLetterColor(letterGuess, currentGuessLetter)}`}>
             {cursor
                 ? <p className={`${Constants.highlightedTextColor} animate-cursor`}>|</p>
                 : <p>{letterGuess == null ? currentGuessLetter : letterGuess.letter}</p>

@@ -1,4 +1,4 @@
-import { GameSettings, GameState, getGuesses, isGameFinished } from "../models/AppState";
+import { cluesUsed, GameSettings, GameState, getGuesses, isGameFinished } from "../models/AppState";
 import { BoardRow } from "./BoardRow";
 
 type Props = {
@@ -8,11 +8,13 @@ type Props = {
     finishedAnimation: () => void;
 };
 
+
 export const Board = ({ game, settings, showWordNotFound, finishedAnimation }: Props) => {
     const gameFinished = isGameFinished(game.status);
     const guesses = getGuesses(game);
+
     return (
-        <div className="flex flex-col gap-2">
+        <div className={`flex flex-col justify-center gap-2 w-full px-8`}>
             {
                 Array.from(Array(settings.numGuesses).keys()).map(i => {
                         if (i < game.guesses.length) {

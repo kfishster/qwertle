@@ -29,7 +29,7 @@ export const SettingRow = ({ name, value, toggle }: RowProps) => {
 export const Settings = ({ settings, toggleShowSubstrings, toggleKeyboardHeatmap, closeSettings }: Props) => {
     return (
         <Modal close={closeSettings}>
-            <div className="flex flex-col items-center gap-2 w-full">
+            <div className="flex flex-col items-center gap-4 w-full">
                 <h1 className="text-2xl pb-8">/* SETTINGS */</h1>
                 <SettingRow name="Show substring clues" value={settings.showSubstrings} toggle={toggleShowSubstrings} />
                 <SettingRow name="Show keyboard heatmap" value={settings.showKeyboardHeatmap} toggle={toggleKeyboardHeatmap} />

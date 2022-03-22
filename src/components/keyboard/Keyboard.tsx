@@ -34,7 +34,7 @@ export const Keyboard = (props: Props) => {
     const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "-ZXCVBNM<"];
     
     return (
-        <div className="flex flex-col gap-1 w-full md:w-3/4 px-4 h-full justify-items-stretch">
+        <div className="flex flex-col gap-1 w-full md:w-3/4 px-4 h-full justify-items-stretch transition-all ">
             {keyboardRows.map((row, i) => getKeyboardRow(row, i, props))}
         </div>
     );

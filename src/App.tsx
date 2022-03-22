@@ -237,7 +237,7 @@ class App extends React.Component<{}, AppState> {
                 refreshPractice={resetPractice}/>
             </div>
             {/* board */}
-            <div className="flex">
+            <div className="flex grow w-full md:w-3/5 lg:w-2/5 justify-center">
               <Board 
                 game={model.game}
                 settings={model.settings}
