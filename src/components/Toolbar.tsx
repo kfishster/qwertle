@@ -2,6 +2,7 @@
 import { CogIcon, QuestionMarkCircleIcon, ChartBarIcon, RefreshIcon } from '@heroicons/react/outline';
 import Toggle from 'react-toggle';
 import "react-toggle/style.css";
+import { getSubtitle } from './models/AppState';
 
 type Props = {
     gameFinished: boolean;
@@ -14,26 +15,12 @@ type Props = {
     refreshPractice: () => void;
     finishedAnimation: () => void;
 };
-  
-function getSubtitle(cluesEnabled: number) {
-    switch (cluesEnabled) {
-        case 1: {
-            return "coder mode";
-        }
-        case 2: {
-            return "haxxor mode";
-        }
-        default: {
-            return "baby mode";
-        }
-    }
-}
 
 export const Toolbar = ({ gameFinished, cluesEnabled, practice, togglePractice, openAbout, openResults, openSettings, refreshPractice, finishedAnimation }: Props) => {
     return (
-        <div className="flex flex-col text-mainframe-green justify-between items-center w-full px-2">
+        <div className="flex flex-col text-mainframe-green justify-between items-center w-full px-4">
             <div className="flex flex-row text-mainframe-green justify-between items-start w-full">
-                <div className="flex basis-1/4 flex-row gap-2 justify-center">
+                <div className="flex basis-1/4 flex-row gap-2 justify-start">
                     <button onClick={openAbout}><QuestionMarkCircleIcon className="flex h-8 stroke-1" /></button>
                     {gameFinished && <button onClick={openResults}><ChartBarIcon className={`flex h-8 stroke-1`} /></button>}
                 </div>
@@ -44,13 +31,12 @@ export const Toolbar = ({ gameFinished, cluesEnabled, practice, togglePractice, 
                     <div className="flex flex-col items-center">
                         <h1 className="text-2xl">QWORDLE</h1>
                         <p className="text-xs">{getSubtitle(cluesEnabled)}</p>
-                        {/* {practice && <p className="text-xs">(practice)</p>} */}
                     </div>
                     <div className="">
                         <h1 className="text-2xl">*/</h1>    
                     </div>
                 </div>
-                <div className="flex basis-1/4 flex-row gap-2 justify-center">
+                <div className="flex basis-1/4 flex-row gap-2 justify-end">
                     <button onClick={openSettings}><CogIcon className="flex h-8 stroke-1 hover:animate-spin"/></button>
                 </div>
             </div>

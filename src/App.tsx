@@ -42,7 +42,8 @@ function getExampleState(): AppState {
   })
 
   appState.game.currentGuess = ["B", "L", "A", "M"];
-  appState.game.status = GameStatus.WON; 
+  appState.game.status = GameStatus.WON;
+  appState.practice = true;
 
   return appState;
 }
@@ -222,8 +223,8 @@ class App extends React.Component<{}, AppState> {
       <Div100vh>
         <div className="flex h-full flex-col bg-zinc-800" onKeyDown={handleKeyDown} tabIndex={0}>
           {/* toolbar */}
-          <div className={`flex flex-col h-full pb-4 pt-4 items-center gap-6 transition-all ${overlayOpen ? "blur-lg" : ""}`}>
-            <div className="flex w-full">
+          <div className={`flex flex-col h-full pb-4 pt-4 items-center justify-between gap-6 transition-all ${overlayOpen ? "blur-lg" : ""}`}>
+            <div className="flex w-full md:w-3/5 lg:w-2/5">
               <Toolbar 
                 gameFinished={isGameFinished(model.game.status)}
                 cluesEnabled={cluesUsedInGame} 
@@ -244,7 +245,7 @@ class App extends React.Component<{}, AppState> {
                 finishedAnimation={finishedWrongWordAnimation}/>
             </div>
             {/* keyboard */}
-            <div className="flex mt-auto w-full justify-center h-1/4">
+            <div className="flex w-full md:w-4/5 lg:w-3/5 justify-center h-1/4">
               <Keyboard 
                 model={model.keyboard}
                 solution={model.game.solution}

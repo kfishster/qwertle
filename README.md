@@ -1,3 +1,5 @@
+# QWORDLE
+A word game that takes on some patterns from Wordle but adds some more clues
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

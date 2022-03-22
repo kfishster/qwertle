@@ -207,3 +207,17 @@ export function getPersistentGameState(): GameState {
     }
     return getDefaultGameState(false);
 }
+
+export function getSubtitle(cluesEnabled: number) {
+    switch (cluesEnabled) {
+        case 1: {
+            return "coder mode";
+        }
+        case 2: {
+            return "haxxor mode";
+        }
+        default: {
+            return "baby mode";
+        }
+    }
+}

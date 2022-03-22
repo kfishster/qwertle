@@ -2,7 +2,7 @@ import { Guess } from "../models/Guess";
 import { BoardRow } from "../board/BoardRow";
 import { Modal } from './Modal';
 import { useState } from "react";
-import { cluesUsed, GameSettings, GameState, GameStatus, getGuesses } from "../models/AppState";
+import { cluesUsed, GameSettings, GameState, GameStatus, getGuesses, getSubtitle } from "../models/AppState";
 
 type Props = {
     game: GameState;
@@ -34,7 +34,11 @@ function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: nu
     const solutionLines = guesses.map(g => emojiLineFromGuess(g).join(""));
     const qwordleNum = daysSinceFHLStart();
     // practice link for practice word
-    return [`QWORDLE ${practice ? "practice" : qwordleNum} ${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`, ...solutionLines]
+    return [
+        `QWORDLE ${practice ? "" : `#${qwordleNum} `}${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`,
+        getSubtitle(cluesUsed), 
+        ...solutionLines,
+        'https://bit.ly/3qsM9Fn']
 }
 
 export const Result = ({ game, settings, practice, closeResult }: Props) => {
@@ -62,7 +66,7 @@ export const Result = ({ game, settings, practice, closeResult }: Props) => {
                 <div className="pb-8">
                     <BoardRow smallDemo={true} guess={new Guess(game.solution, game.solution)} showSubstrings={false} gameFinished={true}/>
                 </div>
-                <div className="flex flex-col items-center pb-4">
+                <div className="flex flex-col items-center pb-4 gap-1">
                     {shareMessage.map((l, i) => <p key={i} className={`${i !== 0 && `h-4`}`}>{l}</p>)}
                 </div>
                 <button className="rounded-full bg-zinc-800 p-4" onClick={copyToClipboard}>{state.copied ? "Copied!" : "Share"}</button>
