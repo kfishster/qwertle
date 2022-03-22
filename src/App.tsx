@@ -46,57 +46,57 @@ function getExampleState(): AppState {
   return appState;
 }
 
-function getAlarmExample(): AppState {
-  const solution = "ALARM";
-  const appState = getDefaultAppState(); 
+// function getAlarmExample(): AppState {
+//   const solution = "ALARM";
+//   const appState = getDefaultAppState(); 
 
-  // appState.settings.showKeyboardHeatmap = true;
-  // appState.settings.showSubstrings = true;
-  // appState.settings.numGuesses = 4;
+//   // appState.settings.showKeyboardHeatmap = true;
+//   // appState.settings.showSubstrings = true;
+//   // appState.settings.numGuesses = 4;
 
-  // // appState.modals.resultsOpen = true;
+//   // // appState.modals.resultsOpen = true;
 
-  // const guesses = ["SHEAR"];
-  // guesses.forEach(g => {
-  //   const guess = new Guess(g, solution);
-  //   appState.game.guesses.push(guess);
-  //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
-  // })
+//   // const guesses = ["SHEAR"];
+//   // guesses.forEach(g => {
+//   //   const guess = new Guess(g, solution);
+//   //   appState.game.guesses.push(guess);
+//   //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
+//   // })
 
-  appState.game.solution = solution;
-  appState.practice = true;
+//   appState.game.solution = solution;
+//   appState.practice = true;
 
-  // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
-  // appState.game.status = GameStatus.WON;
+//   // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
+//   // appState.game.status = GameStatus.WON;
 
-  return appState;
-}
+//   return appState;
+// }
 
-function getSuiteExample(): AppState {
-  const solution = "SUITE";
-  const appState = getDefaultAppState(); 
+// function getSuiteExample(): AppState {
+//   const solution = "SUITE";
+//   const appState = getDefaultAppState(); 
 
-  // appState.settings.showKeyboardHeatmap = true;
-  // appState.settings.showSubstrings = true;
-  // appState.settings.numGuesses = 4;
+//   // appState.settings.showKeyboardHeatmap = true;
+//   // appState.settings.showSubstrings = true;
+//   // appState.settings.numGuesses = 4;
 
-  appState.modals.aboutOpen = true;
+//   appState.modals.aboutOpen = true;
 
-  // const guesses = ["SHEAR"];
-  // guesses.forEach(g => {
-  //   const guess = new Guess(g, solution);
-  //   appState.game.guesses.push(guess);
-  //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
-  // })
+//   // const guesses = ["SHEAR"];
+//   // guesses.forEach(g => {
+//   //   const guess = new Guess(g, solution);
+//   //   appState.game.guesses.push(guess);
+//   //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
+//   // })
 
-  appState.game.solution = solution;
-  appState.practice = false;
+//   appState.game.solution = solution;
+//   appState.practice = false;
 
-  // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
-  // appState.game.status = GameStatus.WON;
+//   // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
+//   // appState.game.status = GameStatus.WON;
 
-  return appState;
-}
+//   return appState;
+// }
 
 const showExampleGame = false;
 
