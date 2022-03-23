@@ -160,7 +160,7 @@ class App extends React.Component<{}, AppState> {
   
     const submit = () => {
       const newGameState = submitGuessToAppState(model);
-      if (model.game.status == GameStatus.START && newGameState.game.status == GameStatus.PLAYING) {
+      if (model.game.status === GameStatus.START && newGameState.game.status === GameStatus.PLAYING) {
         sendStartedAnalytics(newGameState.practice);
       }
       if (isGameFinished(newGameState.game.status)) {
