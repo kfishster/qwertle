@@ -5,7 +5,7 @@ import { Board } from './components/board/Board';
 import { Keyboard } from './components/keyboard/Keyboard';
 import { Guess } from './components/models/Guess';
 import { addGuessToModel, getDefaultKeyboardModel, getKeyboardModelFromGameState } from './components/models/KeyboardModel';
-import { addLetterToGameState, AppState, cluesUsed, GameStatus, getDefaultAppState, getDefaultGameState, getPersistentGameState, getPersistentSettingsState, isGameFinished, persistSettingState, removeLetterFromGameState, submitGuessToAppState } from './components/models/AppState';
+import { addLetterToGameState, AppState, cluesUsed, GameStatus, getDefaultAppState, getDefaultGameState, getPersistentGameState, getPersistentSettingsState, getPracticeGameState, isGameFinished, persistSettingState, removeLetterFromGameState, submitGuessToAppState } from './components/models/AppState';
 import { Settings } from './components/screens/Settings';
 import { Result } from './components/screens/Result';
 import { About } from './components/screens/About';
@@ -25,7 +25,7 @@ function getAppState(): AppState {
 }
 
 function getExampleState(): AppState {
-  const solution = "AAAAA";
+  const solution = "PIXIE";
   const appState = getDefaultAppState(); 
 
   appState.settings.showKeyboardHeatmap = true;
@@ -34,7 +34,7 @@ function getExampleState(): AppState {
 
   // appState.modals.aboutOpen = true;
 
-  const guesses = ["SDFGH"];
+  const guesses = ["LABOR"];
   guesses.forEach(g => {
     const guess = new Guess(g, solution);
     appState.game.guesses.push(g);
@@ -42,12 +42,13 @@ function getExampleState(): AppState {
   })
 
   appState.game.solution = solution;
-  appState.game.currentGuess = ["B", "L", "A", "M"];
+  // appState.game.currentGuess = ["B", "L", "A", "M"];
   appState.game.status = GameStatus.PLAYING;
   appState.practice = true;
 
   return appState;
 }
+
 
 // function getAlarmExample(): AppState {
 //   const solution = "ALARM";
@@ -103,15 +104,31 @@ function getExampleState(): AppState {
 
 const showExampleGame = false;
 
+function getPracticeRound(): number {
+  let search = window.location.search;
+  let params = new URLSearchParams(search);
+  return Number(params.get('p'));
+}
+
 class App extends React.Component<{}, AppState> {
   constructor(props: any) {
     super(props);
-    this.state = showExampleGame ? getExampleState() : getAppState();
-    // this.state = getSuiteExample();
+    const state = showExampleGame ? getExampleState() : getAppState();
+    const practiceIdx = getPracticeRound();
+
+    if (practiceIdx != null) {
+      state.practice = true;
+      state.game = getPracticeGameState(practiceIdx);
+      state.keyboard = getDefaultKeyboardModel();
+    }
+
+    this.state = state;
   }
 
   render() {
     const model = this.state;
+
+    getPracticeRound();
 
     const addLetter = (letter: string) => {
       this.setState({game: addLetterToGameState(model.game, letter)})

@@ -30,7 +30,7 @@ function daysSinceFHLStart() {
     return Math.ceil(msSince / (1000 * 3600 * 24)); 
 }
 
-function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: number, guesses: Guess[], practice: boolean) {
+function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: number, guesses: Guess[], practice: boolean, practiceHash: number) {
     const solutionLines = guesses.map(g => emojiLineFromGuess(g).join(""));
     const qwordleNum = daysSinceFHLStart();
     // practice link for practice word
@@ -38,14 +38,14 @@ function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: nu
         `QWORDLE ${practice ? "" : `#${qwordleNum} `}${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`,
         getSubtitle(cluesUsed), 
         ...solutionLines,
-        'https://bit.ly/3qsM9Fn']
+        `https://tinyurl.com/4dhunvnk${practice ? `?p=${practiceHash}` : ""}`]
 }
 
 export const Result = ({ game, settings, practice, closeResult }: Props) => {
     const [state, setState] = useState({copied: false});
     
     const isWinner = game.status === GameStatus.WON;
-    const shareMessage = createShareMessage(isWinner, settings.numGuesses, cluesUsed(settings), getGuesses(game), practice);
+    const shareMessage = createShareMessage(isWinner, settings.numGuesses, cluesUsed(settings), getGuesses(game), practice, game.dateHash);
 
     const copyToClipboard = async () => {
         if ('clipboard' in navigator) {

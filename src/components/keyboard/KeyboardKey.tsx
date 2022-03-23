@@ -30,9 +30,9 @@ function proximityToSolution(model: KeyboardModel, letter: string, solution: str
     var remainingSolution = solution;
     // console.log(remainingSolution, this.lettersInPosition);
     model.lettersInPosition.forEach(l => {
-        remainingSolution = remainingSolution.replace(l.letter, "")
+        remainingSolution = remainingSolution.replaceAll(l.letter, "")
     });
-    // console.log(remainingSolution, this.lettersInPosition);
+    // console.log(solution, remainingSolution, model.lettersInPosition);
     
     const letterCoords = indexOnKeyboard(letter);
     const solutionCoords = remainingSolution.split("").map(l => indexOnKeyboard(l));
@@ -42,7 +42,7 @@ function proximityToSolution(model: KeyboardModel, letter: string, solution: str
 }
 
 function distanceBetweenCoords(coord1: number[], coord2: number[]) {
-    return Math.pow(Math.abs(coord1[0] - coord2[0]), 2) + Math.pow(Math.abs(coord1[1] - coord2[1]), 2)
+    return Math.sqrt(Math.pow(Math.abs(coord1[0] - coord2[0]), 2) + Math.pow(Math.abs(coord1[1] - coord2[1]), 2))
 }
 
 function indexOnKeyboard(letter: string): number[] {
@@ -63,6 +63,7 @@ function indexOnKeyboard(letter: string): number[] {
 }
 
 function getLetterBackground(letter: string, model: KeyboardModel, showKeyboardHeatmap: boolean, solution: string, shadeOverride: string | undefined) {
+    // console.log(letter, model);
     if (shadeOverride != null) {
         return shadeOverride;
     }
@@ -76,13 +77,13 @@ function getLetterBackground(letter: string, model: KeyboardModel, showKeyboardH
         const distance = proximityToSolution(model, letter, solution);
         console.log(letter, distance);
         if (showKeyboardHeatmap) {
-            if (distance <= 1.5) {
+            if (distance <= Math.sqrt(2)) {
                 return Constants.keyboardClue1;
             }
-            else if (distance <= 4.5) {
+            else if (distance <= Math.sqrt(7)) {
                 return Constants.keyboardClue2;
             }
-            else if (distance <= 9.5) {
+            else if (distance <= Math.sqrt(9)) {
                 return Constants.keyboardClue3;
             }
         }
@@ -122,7 +123,6 @@ export const KeyboardKey = ({ letter, model, isBackspace, isSubmit, showKeyboard
                     : (isSubmit 
                         ? <UploadIcon className="h-1/2 w-3/4"/> 
                         : <p>{letter}</p>)
-
                 }
             </div>
         </button>

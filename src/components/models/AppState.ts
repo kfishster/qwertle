@@ -58,17 +58,25 @@ function getHashForDate(): number {
     return Math.abs(hashCode(dateString));
 }
 
-export function getDefaultGameState(practice: boolean): GameState {
-    const hash = practice ? Math.floor(Math.random() * wordleSolutions.length) : getHashForDate();
-    const solution = wordleSolutions[hash % wordleSolutions.length].toUpperCase();
+function getGameStateWithSolution(solutionHash: number): GameState {
+    const solution = wordleSolutions[solutionHash % wordleSolutions.length].toUpperCase();
 
     return {
-        dateHash: hash,
+        dateHash: solutionHash,
         solution: solution,
         guesses: [],
         currentGuess: [],
         status: GameStatus.PLAYING
     }
+}
+
+export function getDefaultGameState(practice: boolean): GameState {
+    const hash = practice ? Math.floor(Math.random() * wordleSolutions.length) : getHashForDate();
+    return getGameStateWithSolution(hash);
+}
+
+export function getPracticeGameState(practiceIdx: number): GameState {
+    return getGameStateWithSolution(practiceIdx);
 }
 
 export function getDefaultSettings() {
