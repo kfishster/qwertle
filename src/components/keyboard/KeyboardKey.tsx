@@ -1,6 +1,6 @@
 import { Constants } from "../Constants";
 import { KeyboardModel } from "../models/KeyboardModel";
-import { BackspaceIcon, UploadIcon } from '@heroicons/react/outline';
+import { BackspaceIcon, ChevronDoubleUpIcon } from '@heroicons/react/outline';
 import { LetterGuess } from "../models/Guess";
 
 type Props = {
@@ -117,11 +117,11 @@ function getLetterColor(letter: string, model: KeyboardModel, solution: string, 
 export const KeyboardKey = ({ letter, model, isBackspace, isSubmit, showKeyboardHeatmap, shadeOverride, solution, onPress }: Props) => {
     return (
         <button className="flex flex-1 h-full" onClick={() => onPress(letter)}>
-            <div className={`pointer-events-none md:pointer-events-auto flex flex-1 h-full justify-center items-center basis-1 border-2 font-mono rounded-md border-dashed font-semibold text-xl md:text-2xl ${Constants.borderColor} ${getLetterBackground(letter, model, showKeyboardHeatmap, solution, shadeOverride)} ${getLetterColor(letter, model, solution, showKeyboardHeatmap)}`}>
+            <div className={`pointer-events-none md:pointer-events-auto flex flex-1 h-full justify-center items-center basis-1 border-2 font-mono rounded-md border-dotted font-semibold text-xl md:text-2xl ${Constants.borderColor} ${getLetterBackground(letter, model, showKeyboardHeatmap, solution, shadeOverride)} ${getLetterColor(letter, model, solution, showKeyboardHeatmap)}`}>
                 { isBackspace 
                     ? <BackspaceIcon className="h-1/2 w-3/4"/> 
                     : (isSubmit 
-                        ? <UploadIcon className="h-1/2 w-3/4"/> 
+                        ? <ChevronDoubleUpIcon className="h-1/2 w-3/4"/> 
                         : <p>{letter}</p>)
                 }
             </div>
