@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/Analytics/index.js"
+  "scriptFile": "../dist/Usage/index.js"
 }

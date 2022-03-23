@@ -102,10 +102,13 @@ function getExampleState(): AppState {
 //   return appState;
 // }
 
-async function sendAnalytics() {
-  const { text } = await( await fetch(`/api/analytics`)).json();
-  console.log(text)
-} 
+async function sendStartedAnalytics(practice: boolean) {
+ await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
+}
+
+async function sendFinishedGameAnalytics(practice: boolean, substringsOn: boolean, heatmapOn: boolean) {
+  await fetch(`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${substringsOn ? "1" : "0"}&heatmap=${heatmapOn ? "1" : "0"}`);
+ }
 
 const showExampleGame = false;
 
@@ -138,7 +141,6 @@ class App extends React.Component<{}, AppState> {
       state.modals.aboutOpen = true;
     }
 
-    sendAnalytics();
     this.state = state;
   }
 
@@ -157,6 +159,13 @@ class App extends React.Component<{}, AppState> {
     }
   
     const submit = () => {
+      const newGameState = submitGuessToAppState(model);
+      if (model.game.status == GameStatus.START && newGameState.game.status == GameStatus.PLAYING) {
+        sendStartedAnalytics(newGameState.practice);
+      }
+      if (isGameFinished(newGameState.game.status)) {
+        sendFinishedGameAnalytics(newGameState.practice, newGameState.settings.showSubstrings, newGameState.settings.showKeyboardHeatmap);
+      }
       this.setState(submitGuessToAppState(model))
     };
   
