@@ -104,10 +104,17 @@ function getExampleState(): AppState {
 
 const showExampleGame = false;
 
-function getPracticeRound(): number {
+function getPracticeRound(): number | undefined {
   let search = window.location.search;
   let params = new URLSearchParams(search);
-  return Number(params.get('p'));
+  let practiceIdx = params.get('p');
+
+  if (practiceIdx != null) {
+    let number = Number(params.get('p'));
+    if (!isNaN(number)) {
+      return number;
+    }
+  }
 }
 
 class App extends React.Component<{}, AppState> {
