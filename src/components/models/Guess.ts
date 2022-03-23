@@ -16,11 +16,13 @@ export class LetterSubstring {
     substring: string;
     idx: number;
     length: number;
+    reverse: boolean;
 
-    constructor(guess: string, substring: string) {
+    constructor(guess: string, substring: string, reverse: boolean) {
         this.substring = substring;
         this.idx = guess.indexOf(substring);
         this.length = this.substring.length;
+        this.reverse = reverse;
     }
 }
 
@@ -28,14 +30,25 @@ export class Guess {
     guess: string;
     letters: LetterGuess[];
     substrings: LetterSubstring[];
+    reverseSubstrings: LetterSubstring[];
     substringsByIndex: Map<number, LetterSubstring>;
 
     constructor(guess: string, solution: string) {
         this.guess = guess;
-        this.substrings = this.findLargestSubstring(guess, solution).map(sub => new LetterSubstring(guess, sub));
+        this.substrings = this.findLargestSubstring(guess, solution).map(sub => new LetterSubstring(guess, sub, false));
+
+        let reverseSolution = solution.split("").reverse().join("");
+        this.reverseSubstrings = this.findLargestSubstring(guess, reverseSolution).map(sub => new LetterSubstring(guess, sub, true));
         this.substringsByIndex = new Map();
-        
+
         const substringLetterIdxs: number[] = [];
+
+        // set reverse first so that normal substring overrides if it exists at the same index
+        this.reverseSubstrings.forEach(sub => {
+            Array.from(Array(sub.length).keys()).map(j => substringLetterIdxs.push(sub.idx + j));
+            this.substringsByIndex.set(sub.idx, sub)
+        });
+
         this.substrings.forEach(sub => {
             Array.from(Array(sub.length).keys()).map(j => substringLetterIdxs.push(sub.idx + j));
             this.substringsByIndex.set(sub.idx, sub)
@@ -54,6 +67,7 @@ export class Guess {
             return new LetterGuess(letter, inPosition)
         });
 
+        // preferable to highlight yellows in substring if there are other occurences
         substringLetterIdxs.forEach(substringLetterIdx => {
             const letter = letters[substringLetterIdx];
             if (!letter.inPosition) {

@@ -17,7 +17,7 @@ type SectionHeaderProps = {
 export const SectionHeader = ({ title }: SectionHeaderProps) => {
     return (
         <div className="flex flex-col w-full justify-center items-center">
-            <h1 className="text-xl">{title}</h1>
+            <h1 className="text-xl font-bold">{title}</h1>
             <div className="h-1 w-full bg-mainframe-green m-4"></div>
         </div>
     )
@@ -32,7 +32,7 @@ export const InstructionSection = ({ title, elementProps }: InstructionSectionPr
     return (
         <div className="flex flex-col">
             <SectionHeader title={title} />
-            <div className="flex flex-col justify-start items-center gap-2 pb-8">
+            <div className="flex flex-col justify-start items-center gap-4 pb-8">
                 {elementProps.map(e => <InstructionElement {...e}/>)}
             </div>
         </div>
@@ -93,25 +93,25 @@ export const About = ({ closeAbout }: Props) => {
     return (
         <Modal close={closeAbout}>
             <InstructionSection
-                title="About QWORDLE"
+                title="QWORDLE rules"
                 elementProps={[
                     {
-                        text: "QWORDLE follows usual Wordle rules, once you guess a five letter word, if a letter is in the word but in the wrong position, it will be highlighted as yellow."
+                        text: "You have 6 attempts to guess a five letter word. If you guess a letter that's in the solution, the tile will be highlighted in yellow"
                     }, 
                     {
                         guess: new Guess("HELLO", "TAUPE"), showSubstrings: false
                     },
                     {
-                        text: "If it is in the word and in the correct position, it will be green."
+                        text: "If you guess a letter in the solution that is in the right place in the word, it will be highlighted in green!"
                     }, 
                     {
                         guess: new Guess("BEARS", "PLANE"), showSubstrings: false
                     },
                     {
-                        text: "The fun starts when you add some QWORDLE magic. In the settings (top right gear), you'll see two more clues you can use to guess your word, substrings and keyboard heatmap"
+                        text: "That's it, no further complexity, that's all you need to do....UNLESS YOU'RE READY TO HACK INTO THE MAINFRAME (regardless, I'm turning on haxxor mode right away)."
                     },
                     {
-                        text: "Each clue adds more contextual information to the board, but removes one possible guess!"
+                        text: "haxxor mode comes with two more clues that should guide you to your solution, more on them below"
                     },
                 ]}
             />
@@ -119,27 +119,40 @@ export const About = ({ closeAbout }: Props) => {
                 title="Substrings"
                 elementProps={[
                     {
-                        text: "The substrings clue will tell you whether you've gotten some letters in the right order, but not in the right position in the word. For example, if you're guessing the word \"MACHO\" and you guess"
+                        text: "If you submit a guess that contains some letters in the same order as in the solution, but not in the right place in the guess, these letters will be highlighted with a yellow background. Say you guess the word \"CHAIR\" but the solution is the word \"MATCH\", you will see"
                     }, 
                     {
-                        guess: new Guess("CHAIR", "MACHO"), showSubstrings: true
+                        guess: new Guess("CHAIR", "MATCH"), showSubstrings: true
                     },
                     {
-                        text: "You will see that the CH pair is connected meaning you will find the letters \"CH\" in the solution next to each other, but they're currently not in their correct spot. This works with more than 2 letters as well, such as guessing"
-                    }, 
+                        text: "This tells you the \"CH\" is in the solution, but not in the beginning of the word, and also that \"A\" is in the solution, but not in the right place."
+                    },
+                    {
+                        text: "\"But does it work in reverse, as well?\" you might ask, and I might answer - YES! If the order of the letters in reversed order appears in the solution, the highlight between the letters will be blue (the inverse of yellow). Say you're trying to guess \"MATCH\" and you guess \"START\""
+                    },
+                    {
+                        guess: new Guess("START", "MATCH"), showSubstrings: true
+                    },
+                    {
+                        text: "\"TA\" highlighted with blue indicates that the solution contains \"AT\""
+                    },
+                    {
+                        text: "This clue works for substrings of all lengths, such as guessing \"WINGS\" when the solution is \"SWING\""
+                    },
                     {
                         guess: new Guess("WINGS", "SWING"), showSubstrings: true
                     },
                     {
-                        text: "when the solution is SWING"
+                        text: "This should be enough to solve on the next try!"
                     }
+
                 ]}
             />
             <InstructionSection
                 title="Keyboard Heatmap"
                 elementProps={[
                     {
-                        text: "The keyboard heatmap lets you know how close your guess is to the right letters in the QWERTY keyboard. The closer the letter you guessed is to any letter in the solution, the stronger the key will glow. The glow comes in three steps indicating proximity, 1, 2, or 3 keys away in any direction. The x indicates a key that's been used but is not close to a letter in the solution."
+                        text: "All haxxors own a light up keyboard, that's just a known fact, that's how they are able to pick the right password to break any system. With QWORDLE, the closer the keyboard key is to a letter in the solution, the brighter it will glow. The glow will indicate whether you are one key away (in any direction) to a letter in the solution, 2 keys away, and 3. The x key shows you a key that's pretty far away from a potential answer."
                     }, 
                     {
                         keysWithShade: [["1", Constants.keyboardClue1], ["2", Constants.keyboardClue2], ["3", Constants.keyboardClue3], ["x", Constants.usedLetterKey]], 
@@ -147,7 +160,7 @@ export const About = ({ closeAbout }: Props) => {
                         solution: "BREWS"
                     },
                     {
-                        text: "If you're guessing the word \"BREWS\" and submit a guess \"CHUNK\", the N and the H are one square away from a letter in the solution (N), while C is two letters away, and K is slightly more than 2"
+                        text: "Say you are trying to guess the word \"BREWS\" and you guess \"CHUNK\". The N and the H on the keyboard are one square away from the letter \"B\" that's in the solution, so they light up pretty bright. \"K\" and \"C\" are two away from \"B\", so they light up, but a bit dimmer."
                     }, 
                     {
                         keys: [["F", "G", "H", "J", "K"], ["C", "V", "B", "N", "M"]], 
@@ -155,23 +168,29 @@ export const About = ({ closeAbout }: Props) => {
                         solution: "BREWS"
                     },
                     {
-                        text: "If you guess \"BRINE\", you've successfully found the B, so H, N, and K are not near another letter in the solution anymore. C, however, is close to S, so it indicates that there is another letter from the solution somewhere nearby"
+                        text: "Your next guess is \"BRINE\". Now that you've uncovered the \"B\", the letter \"H\", \"N\" and \"K\" are not close to an uncovered letter in the solution and have no more glow. The \"C\" is still two keys away from the letter \"S\", so it stays on!"
                     }, 
                     {
                         keys: [["F", "G", "H", "J", "K"], ["C", "V", "B", "N", "M"]], 
                         keyboardModel: advancedKeyboardModel,
                         solution: "BREWS"
-                    }
+                    },
+                    {
+                        text: "The glow is not additive - keys will only indicate their proximity to the closest letter in the solution"
+                    }, 
                 ]}
             />
             <InstructionSection
                 title="Modes"
                 elementProps={[
                     {
-                        text: "In settings, you can turn these clues on or off, if you play with all the clues but only 4 guesses, you are a haxxor, so you are playing haxxor mode. One clue gets you coder mode, and no clues is the boring baby mode."
+                        text: "You're obviously a haxxor in training, so I'm turning on haxxor mode for you right away. If, however, you want more guesses, but don't want to use these clues, you are free to turn off the substring clue or the keyboard heatmap and come down to either \"coder mode\" or \"baby mode\"."
                     }, 
                     {
-                        text: "Feel free to toggle practice mode at the top and play a couple of warm up games. Once you finish a practice round, you can share the link that will let your friends try to guess the same word!"
+                        text: "The idea here is that additional context clues should make it easier to guess the words, so you need less guesses to get to the answer."
+                    },
+                    {
+                        text: "You can also take the practice mode for a spin, using the toggle at the top! If the practice round was tough and you want to torture your friend with it, use the link in the results screen (copy it using the \"share\" button) and it will throw them into the same practice round so they can suffer to guess something like \"PIXIE\" or \"FUZZY\""
                     }
                 ]}
             />
@@ -183,7 +202,10 @@ export const About = ({ closeAbout }: Props) => {
                     }
                 ]}
             />
-            <a href="https://github.com/kfishster/qwordle"><CodeIcon className="border w-14 p-4 rounded-full border-mainframe-green"/></a>
+            <a className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green" href="https://github.com/kfishster/qwordle">
+                <p>Github</p>
+                <CodeIcon className="w-6 "/>
+            </a>
         </Modal>
     );
 };

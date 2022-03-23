@@ -16,11 +16,11 @@ export interface ModalState {
 }
 
 export enum GameStatus {
-    PLAYING, LOST, WON
+    START, PLAYING, LOST, WON
 }
 
 export function isGameFinished(status: GameStatus) {
-    return status !== GameStatus.PLAYING;
+    return status === GameStatus.WON || status === GameStatus.LOST;
 }
 
 export interface GameState {
@@ -66,7 +66,7 @@ function getGameStateWithSolution(solutionHash: number): GameState {
         solution: solution,
         guesses: [],
         currentGuess: [],
-        status: GameStatus.PLAYING
+        status: GameStatus.START
     }
 }
 
@@ -138,7 +138,7 @@ export const removeLetterFromGameState = (game: GameState): GameState => {
 }
 
 const submitGuessToGameState = (game: GameState, guess: string, numGuesses: number): GameState => {
-    let status = game.status;
+    let status = GameStatus.PLAYING;
 
     if (guess === game.solution) {
         status = GameStatus.WON;

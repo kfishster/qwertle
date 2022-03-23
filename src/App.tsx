@@ -25,7 +25,7 @@ function getAppState(): AppState {
 }
 
 function getExampleState(): AppState {
-  const solution = "PIXIE";
+  const solution = "BATCH";
   const appState = getDefaultAppState(); 
 
   appState.settings.showKeyboardHeatmap = true;
@@ -34,7 +34,7 @@ function getExampleState(): AppState {
 
   // appState.modals.aboutOpen = true;
 
-  const guesses = ["LABOR"];
+  const guesses = ["TAINT", "TABUL"];
   guesses.forEach(g => {
     const guess = new Guess(g, solution);
     appState.game.guesses.push(g);
@@ -291,7 +291,7 @@ class App extends React.Component<{}, AppState> {
             </div>
           </div>
           {/* <div className={`${model.settings.isSettingsOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-700 absolute h-full w-full flex justify-center items-center`}><Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/></div> */}
-          {model.modals.settingsOpen && <Settings settings={model.settings} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/>}
+          {model.modals.settingsOpen && <Settings settings={model.settings} status={model.game.status} toggleShowSubstrings={toggleShowSubstrings} toggleKeyboardHeatmap={toggleKeyboardHeatmap} closeSettings={closeSettings}/>}
           {model.modals.resultsOpen && <Result game={model.game} practice={model.practice} settings={model.settings} closeResult={closeResult}/>}
           {model.modals.aboutOpen && <About closeAbout={closeAbout}/>}
         </div>
