@@ -25,24 +25,25 @@ function getAppState(): AppState {
 }
 
 function getExampleState(): AppState {
-  const solution = "PURSE";
+  const solution = "WINGS";
   const appState = getDefaultAppState(); 
 
   appState.settings.showKeyboardHeatmap = true;
   appState.settings.showSubstrings = true;
   appState.settings.numGuesses = 4;
 
-  appState.modals.resultsOpen = true;
+  appState.modals.aboutOpen = true;
 
-  const guesses = ["BUNCH", "WRITE", "PURSE"];
+  const guesses = ["BUNCH", "SWING"];
   guesses.forEach(g => {
     const guess = new Guess(g, solution);
     appState.game.guesses.push(g);
     appState.keyboard = addGuessToModel(appState.keyboard, guess);
   })
 
+  appState.game.solution = solution;
   appState.game.currentGuess = ["B", "L", "A", "M"];
-  appState.game.status = GameStatus.WON;
+  appState.game.status = GameStatus.PLAYING;
   appState.practice = true;
 
   return appState;
@@ -100,7 +101,7 @@ function getExampleState(): AppState {
 //   return appState;
 // }
 
-const showExampleGame = false;
+const showExampleGame = true;
 
 class App extends React.Component<{}, AppState> {
   constructor(props: any) {
@@ -237,7 +238,7 @@ class App extends React.Component<{}, AppState> {
                 refreshPractice={resetPractice}/>
             </div>
             {/* board */}
-            <div className="flex grow w-full md:w-3/5 lg:w-2/5 justify-center">
+            <div className="flex flex-none w-full md:w-3/5 lg:w-2/5 justify-center">
               <Board 
                 game={model.game}
                 settings={model.settings}
@@ -245,7 +246,7 @@ class App extends React.Component<{}, AppState> {
                 finishedAnimation={finishedWrongWordAnimation}/>
             </div>
             {/* keyboard */}
-            <div className="flex w-full md:w-4/5 lg:w-3/5 justify-center h-1/4">
+            <div className="flex  w-full md:w-4/5 lg:w-3/5 justify-center h-1/4">
               <Keyboard 
                 model={model.keyboard}
                 solution={model.game.solution}

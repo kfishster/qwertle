@@ -53,7 +53,7 @@ export const InstructionElement = ({ text, guess, showSubstrings, keys, keysWith
     return (
         <div className="flex justify-center w-full">
             {text && <p>{text}</p>}
-            {guess && showSubstrings != null && <BoardRow smallDemo={true} showSubstrings={showSubstrings} guess={guess} gameFinished={false}/>}
+            {guess && showSubstrings != null && <div><BoardRow smallDemo={true} showSubstrings={showSubstrings} guess={guess} gameFinished={false}/></div>}
             {keysWithShade && keyboardModel && solution &&
                 <div className="flex flex-row gap-1 w-3/4 justify-center ">{keysWithShade.map(l => keyboardKey(keyboardModel, l[0], solution, l[1]))
                 }
