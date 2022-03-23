@@ -101,7 +101,7 @@ function getExampleState(): AppState {
 //   return appState;
 // }
 
-const showExampleGame = true;
+const showExampleGame = false;
 
 class App extends React.Component<{}, AppState> {
   constructor(props: any) {
