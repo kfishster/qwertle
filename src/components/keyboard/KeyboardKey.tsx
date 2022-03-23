@@ -96,16 +96,16 @@ function getLetterColor(letter: string, model: KeyboardModel, solution: string, 
         return Constants.defaultTextColor;
     }
     else if (hasBeenGuessed(model, letter)) {
-        const distance = proximityToSolution(model, letter, solution);
+        // const distance = proximityToSolution(model, letter, solution);
         // console.log(letter, distance);
-        if (showKeyboardHeatmap) {
-            if (distance <= 4.5) {
-                return "text-slate-700"
-            }
-            else if (distance <= 9.5) {
-                return "text-slate-800"
-            }
-        }
+        // if (showKeyboardHeatmap) {
+        //     if (distance <= 4.5) {
+        //         return "text-slate-700"
+        //     }
+        //     else if (distance <= 9.5) {
+        //         return "text-slate-800"
+        //     }
+        // }
         return Constants.defaultTextColor;
     }
 
@@ -124,7 +124,6 @@ export const KeyboardKey = ({ letter, model, isBackspace, isSubmit, showKeyboard
                         : <p>{letter}</p>)
 
                 }
-                {/* <p>{letter}</p> */}
             </div>
         </button>
     );

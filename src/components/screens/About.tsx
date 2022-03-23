@@ -138,7 +138,7 @@ export const About = ({ closeAbout }: Props) => {
                 title="Keyboard Heatmap"
                 elementProps={[
                     {
-                        text: "The keyboard heatmap lets you know how close your guess is to the right letters in the QWERTY keyboard. If the key you used is either 1, 2, or 3 keys away in any direction from a letter in the solution, it will shade in the keys to indicate proximity. The x indicates a key that's been used but is not close to a letter in the solution."
+                        text: "The keyboard heatmap lets you know how close your guess is to the right letters in the QWERTY keyboard. The closer the letter you guessed is to any letter in the solution, the stronger the key will glow. The glow comes in three steps indicating proximity, 1, 2, or 3 keys away in any direction. The x indicates a key that's been used but is not close to a letter in the solution."
                     }, 
                     {
                         keysWithShade: [["1", Constants.keyboardClue1], ["2", Constants.keyboardClue2], ["3", Constants.keyboardClue3], ["x", Constants.usedLetterKey]], 

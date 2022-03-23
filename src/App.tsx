@@ -25,16 +25,16 @@ function getAppState(): AppState {
 }
 
 function getExampleState(): AppState {
-  const solution = "WINGS";
+  const solution = "AAAAA";
   const appState = getDefaultAppState(); 
 
   appState.settings.showKeyboardHeatmap = true;
   appState.settings.showSubstrings = true;
   appState.settings.numGuesses = 4;
 
-  appState.modals.aboutOpen = true;
+  // appState.modals.aboutOpen = true;
 
-  const guesses = ["BUNCH", "SWING"];
+  const guesses = ["SDFGH"];
   guesses.forEach(g => {
     const guess = new Guess(g, solution);
     appState.game.guesses.push(g);

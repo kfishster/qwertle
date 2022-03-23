@@ -27,6 +27,11 @@ module.exports = {
       animation: {
         'cursor': 'pulse 1s linear infinite',
         'wiggle': 'wiggle 200ms ease-in-out'
+      },
+      boxShadow: {
+        'glow1': 'inset 0px 0px 14px 6px rgb(0 0 0 / 0.25)',
+        'glow2': 'inset 0px 0px 8px 3px rgb(0 0 0 / 0.25)',
+        'glow3': 'inset 0px 0px 10px -2px rgb(0 0 0 / 0.25)'
       }
     },
   },
