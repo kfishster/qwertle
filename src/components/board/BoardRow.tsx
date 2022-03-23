@@ -41,7 +41,7 @@ function renderGuess(guess: Guess, showSubstrings: boolean, smallDemo: boolean |
         if (showSubstrings && guess.substringsByIndex.has(i)) {
             if (sub != null && shouldRenderSubstring(guess, sub)) {
                 // eslint-disable-next-line no-loop-func
-                const combinedCells = Array.from(Array(sub.length).keys()).map(j => <BoardCell key={j} smallDemo={smallDemo} letterGuess={guess.letters[i+j]}/>);
+                const combinedCells = Array.from(Array(sub.length).keys()).map(j => <BoardCell key={j} smallDemo={smallDemo} letterGuess={guess.letters[i+j]} insideSubstring={true}/>);
 
                 row.push(<div key={i} className={`flex ${getFlexString(sub.length)} flex-row gap-2 ${sub.reverse ? Constants.reverseSubstringBackground : Constants.substringBackground}`}>
                     {combinedCells}
