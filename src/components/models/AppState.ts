@@ -80,10 +80,11 @@ export function getPracticeGameState(practiceIdx: number): GameState {
 }
 
 export function getDefaultSettings() {
+    // lets default to haxxor mode
     return {
-        numGuesses: Constants.maxNumGuesses, 
-        showSubstrings: false, 
-        showKeyboardHeatmap: false
+        numGuesses: Constants.maxNumGuesses - 2, 
+        showSubstrings: true, 
+        showKeyboardHeatmap: true
     };
 }
 
@@ -195,6 +196,15 @@ export function persistGameState(game: GameState) {
 
 export function persistSettingState(settings: GameSettings) {
     window.localStorage.setItem("settings", JSON.stringify(settings))
+}
+
+export function markFirstRun() {
+    window.localStorage.setItem("firstRun", JSON.stringify(true));
+}
+
+export function isFirstRun(): boolean {
+    const firstRun = window.localStorage.getItem('firstRun');
+    return firstRun == null;
 }
 
 export function getPersistentSettingsState(): GameSettings {

@@ -4,6 +4,7 @@ import { KeyboardKey } from "../keyboard/KeyboardKey";
 import { addGuessToModel, getDefaultKeyboardModel, KeyboardModel } from "../models/KeyboardModel";
 import { Constants } from "../Constants";
 import { Modal } from './Modal';
+import { CodeIcon } from '@heroicons/react/outline';
 
 type Props = {
     closeAbout: () => void;
@@ -163,6 +164,26 @@ export const About = ({ closeAbout }: Props) => {
                     }
                 ]}
             />
+            <InstructionSection
+                title="Modes"
+                elementProps={[
+                    {
+                        text: "In settings, you can turn these clues on or off, if you play with all the clues but only 4 guesses, you are a haxxor, so you are playing haxxor mode. One clue gets you coder mode, and no clues is the boring baby mode."
+                    }, 
+                    {
+                        text: "Feel free to toggle practice mode at the top and play a couple of warm up games. Once you finish a practice round, you can share the link that will let your friends try to guess the same word!"
+                    }
+                ]}
+            />
+            <InstructionSection
+                title="Source Code"
+                elementProps={[
+                    {
+                        text: "This was written during a hackathon, if you want to cringe at my code, feel free to visit the Github link below"
+                    }
+                ]}
+            />
+            <a href="https://github.com/kfishster/qwordle"><CodeIcon className="border w-14 p-4 rounded-full border-mainframe-green"/></a>
         </Modal>
     );
 };

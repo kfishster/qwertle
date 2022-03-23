@@ -5,7 +5,7 @@ import { Board } from './components/board/Board';
 import { Keyboard } from './components/keyboard/Keyboard';
 import { Guess } from './components/models/Guess';
 import { addGuessToModel, getDefaultKeyboardModel, getKeyboardModelFromGameState } from './components/models/KeyboardModel';
-import { addLetterToGameState, AppState, cluesUsed, GameStatus, getDefaultAppState, getDefaultGameState, getPersistentGameState, getPersistentSettingsState, getPracticeGameState, isGameFinished, persistSettingState, removeLetterFromGameState, submitGuessToAppState } from './components/models/AppState';
+import { addLetterToGameState, AppState, cluesUsed, GameStatus, getDefaultAppState, getDefaultGameState, getPersistentGameState, getPersistentSettingsState, getPracticeGameState, isFirstRun, isGameFinished, markFirstRun, persistSettingState, removeLetterFromGameState, submitGuessToAppState } from './components/models/AppState';
 import { Settings } from './components/screens/Settings';
 import { Result } from './components/screens/Result';
 import { About } from './components/screens/About';
@@ -129,11 +129,17 @@ class App extends React.Component<{}, AppState> {
       state.keyboard = getDefaultKeyboardModel();
     }
 
+    if (isFirstRun()) {
+      state.modals.aboutOpen = true;
+    }
+
+
     this.state = state;
   }
 
   render() {
     const model = this.state;
+    const firstRun = isFirstRun();
 
     getPracticeRound();
 
@@ -204,6 +210,9 @@ class App extends React.Component<{}, AppState> {
     }
 
     const closeAbout = () => {
+      if (firstRun) {
+        markFirstRun();
+      }
       this.setState({...model, modals: {...model.modals, aboutOpen: false}});
     }
 
