@@ -25,7 +25,7 @@ function getAppState(): AppState {
 }
 
 function getExampleState(): AppState {
-  const solution = "BATCH";
+  const solution = "FASTS";
   const appState = getDefaultAppState(); 
 
   appState.settings.showKeyboardHeatmap = true;
@@ -34,7 +34,7 @@ function getExampleState(): AppState {
 
   // appState.modals.aboutOpen = true;
 
-  const guesses = ["TAINT", "TABUL"];
+  const guesses = ["STOCK"];
   guesses.forEach(g => {
     const guess = new Guess(g, solution);
     appState.game.guesses.push(g);
@@ -102,6 +102,11 @@ function getExampleState(): AppState {
 //   return appState;
 // }
 
+async function sendAnalytics() {
+  const { text } = await( await fetch(`/api/analytics`)).json();
+  console.log(text)
+} 
+
 const showExampleGame = false;
 
 function getPracticeRound(): number | undefined {
@@ -133,7 +138,7 @@ class App extends React.Component<{}, AppState> {
       state.modals.aboutOpen = true;
     }
 
-
+    sendAnalytics();
     this.state = state;
   }
 
