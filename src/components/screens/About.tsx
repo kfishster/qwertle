@@ -10,19 +10,6 @@ type Props = {
     closeAbout: () => void;
 };
 
-type SectionHeaderProps = {
-    title: string;
-};
-
-export const SectionHeader = ({ title }: SectionHeaderProps) => {
-    return (
-        <div className="flex flex-col w-full justify-center items-center">
-            <h1 className="text-xl font-bold">{title}</h1>
-            <div className="h-1 w-full bg-mainframe-green m-4"></div>
-        </div>
-    )
-}
-
 type InstructionSectionProps = {
     title: string;
     elementProps: InstructionElementProps[];
@@ -30,9 +17,11 @@ type InstructionSectionProps = {
 
 export const InstructionSection = ({ title, elementProps }: InstructionSectionProps) => {
     return (
-        <div className="flex flex-col">
-            <SectionHeader title={title} />
-            <div className="flex flex-col justify-start items-center gap-4 pb-8">
+        <div className="flex flex-col divide-y-2 divide-dashed divide-mainframe-green/80 gap-4">
+            <div className="flex flex-col w-full justify-center items-center">
+                <h1 className="text-xl font-bold">{title}</h1>
+            </div>
+            <div className="flex flex-col justify-start items-center gap-4 py-8">
                 {elementProps.map(e => <InstructionElement {...e}/>)}
             </div>
         </div>
@@ -93,7 +82,16 @@ export const About = ({ closeAbout }: Props) => {
     return (
         <Modal close={closeAbout}>
             <InstructionSection
-                title="QWORDLE rules"
+                title="What's a QWORDLE"
+                elementProps={[
+                    {
+                        text: "QWERTY + Wordle, it's Wordle but with a cool QWERTY keyboard layout clue - more on that below"
+                    }
+                ]}
+            />
+
+            <InstructionSection
+                title="Rules"
                 elementProps={[
                     {
                         text: "You have 6 attempts to guess a five letter word. If you guess a letter that's in the solution, the tile will be highlighted in yellow"
