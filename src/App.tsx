@@ -106,8 +106,8 @@ async function sendStartedAnalytics(practice: boolean) {
  await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
 }
 
-async function sendFinishedGameAnalytics(practice: boolean, substringsOn: boolean, heatmapOn: boolean) {
-  await fetch(`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${substringsOn ? "1" : "0"}&heatmap=${heatmapOn ? "1" : "0"}`);
+async function sendFinishedGameAnalytics(practice: boolean, substringsOn: boolean, heatmapOn: boolean, hasWon: boolean) {
+  await fetch(`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${substringsOn ? "1" : "0"}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`);
  }
 
 const showExampleGame = false;
@@ -164,7 +164,7 @@ class App extends React.Component<{}, AppState> {
         sendStartedAnalytics(newGameState.practice);
       }
       if (isGameFinished(newGameState.game.status)) {
-        sendFinishedGameAnalytics(newGameState.practice, newGameState.settings.showSubstrings, newGameState.settings.showKeyboardHeatmap);
+        sendFinishedGameAnalytics(newGameState.practice, newGameState.settings.showSubstrings, newGameState.settings.showKeyboardHeatmap, newGameState.game.status === GameStatus.WON);
       }
       this.setState(submitGuessToAppState(model))
     };
