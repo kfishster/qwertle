@@ -29,7 +29,7 @@ export const Toolbar = ({ gameFinished, cluesEnabled, practice, togglePractice, 
                         <h1 className="text-2xl">/*</h1>    
                     </div>
                     <div className="flex flex-col items-center">
-                        <h1 className="text-2xl">QWORDLE</h1>
+                        <h1 className="text-2xl">QWERTLE</h1>
                         <p className="text-xs">{getSubtitle(cluesEnabled)}</p>
                     </div>
                     <div className="">

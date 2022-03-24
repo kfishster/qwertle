@@ -35,7 +35,7 @@ function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: nu
     const qwordleNum = daysSinceFHLStart();
     // practice link for practice word
     return [
-        `QWORDLE ${practice ? "" : `#${qwordleNum} `}${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`,
+        `QWERTLE ${practice ? "" : `#${qwordleNum} `}${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`,
         getSubtitle(cluesUsed), 
         ...solutionLines,
         `https://tinyurl.com/4dhunvnk${practice ? `?p=${practiceHash}` : ""}`]

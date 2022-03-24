@@ -82,7 +82,7 @@ export const About = ({ closeAbout }: Props) => {
     return (
         <Modal close={closeAbout}>
             <InstructionSection
-                title="What's a QWORDLE"
+                title="What's a QWERTLE"
                 elementProps={[
                     {
                         text: "QWERTY + Wordle, it's Wordle but with a cool QWERTY keyboard layout clue - more on that below"
@@ -150,7 +150,7 @@ export const About = ({ closeAbout }: Props) => {
                 title="Keyboard Heatmap"
                 elementProps={[
                     {
-                        text: "All haxxors own a light up keyboard, that's just a known fact, that's how they are able to pick the right password to break any system. With QWORDLE, the closer the keyboard key is to a letter in the solution, the brighter it will glow. The glow will indicate whether you are one key away (in any direction) to a letter in the solution, 2 keys away, and 3. The x key shows you a key that's pretty far away from a potential answer."
+                        text: "All haxxors own a light up keyboard, that's just a known fact, that's how they are able to pick the right password to break any system. With QWERTLE, the closer the keyboard key is to a letter in the solution, the brighter it will glow. The glow will indicate whether you are one key away (in any direction) to a letter in the solution, 2 keys away, and 3. The x key shows you a key that's pretty far away from a potential answer."
                     }, 
                     {
                         keysWithShade: [["1", Constants.keyboardClue1], ["2", Constants.keyboardClue2], ["3", Constants.keyboardClue3], ["x", Constants.usedLetterKey]], 
@@ -200,7 +200,7 @@ export const About = ({ closeAbout }: Props) => {
                     }
                 ]}
             />
-            <a className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green" href="https://github.com/kfishster/qwordle">
+            <a className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green" href="https://github.com/kfishster/qwertle">
                 <p>Github</p>
                 <CodeIcon className="w-6 "/>
             </a>
