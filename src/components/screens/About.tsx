@@ -6,7 +6,6 @@ import {
 	getDefaultKeyboardModel,
 	KeyboardModel,
 } from "../models/KeyboardModel";
-import { Constants } from "../Constants";
 import { Modal } from "./Modal";
 import { CodeIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { Keyboard } from "../keyboard/Keyboard";
@@ -131,6 +130,14 @@ export const About = ({ closeAbout }: Props) => {
 		new Guess("BRINE", "BREWS")
 	);
 
+	var gKeyboardModel = getDefaultKeyboardModel();
+	gKeyboardModel = addGuessToModel(
+		gKeyboardModel,
+		new Guess("QAZWSXEDCRFVTBYHNUJMIKOLP", "G")
+	);
+
+	const githubLink = "https://github.com/kfishster/qwertle";
+
 	return (
 		<Modal close={closeAbout}>
 			<InstructionSection
@@ -141,9 +148,17 @@ export const About = ({ closeAbout }: Props) => {
 					},
 				]}
 			/>
+			<InstructionSection
+				title="Rules TL;DR"
+				elementProps={[
+					{
+						text: "Wordle rules apply, substrings are marked with yellow, reverse substrings in blue, used keyboard keys light up if they're close to the solution letters",
+					},
+				]}
+			/>
 
 			<InstructionSection
-				title="Rules"
+				title="Full Rules"
 				elementProps={[
 					{
 						text: "You have 6 attempts to guess a five letter word. If you guess a letter that's in the solution, the tile will be highlighted in yellow",
@@ -206,37 +221,45 @@ export const About = ({ closeAbout }: Props) => {
 				title="Keyboard Heatmap"
 				elementProps={[
 					{
-						text: "All haxxors own a light up keyboard, that's just a known fact, that's how they are able to pick the right password to break any system. With QWERTLE, the closer the keyboard key is to a letter in the solution, the brighter it will glow. The glow will indicate whether you are one key away (in any direction) to a letter in the solution, 2 keys away, and 3. The x key shows you a key that's pretty far away from a potential answer.",
+						text: "All haxxors own a light up keyboard, that's just a known fact, that's how they are able to pick the right password to break any system. With QWERTLE, the closer the physical keyboard key is to a key in the solution, the brighter it will glow. The glow will indicate whether you are one key away to a letter in the solution (in any direction), 2 keys away, or 3. If \"G\" is in the solution, this would be the ",
 					},
 					{
-						keysWithShade: [
-							["1", Constants.keyboardClue1],
-							["2", Constants.keyboardClue2],
-							["3", Constants.keyboardClue3],
-							["x", Constants.usedLetterKey],
-						],
+						text: "This glow only appears on the letters that you've used in your guesses. Here are all the possible glows you would see if \"G\" were in the solution and you've (somehow) used all the letters around it.",
+					},
+					{
+						fullKeyboard: true,
+						keyboardModel: gKeyboardModel,
+						solution: "G",
+					},
+					{
+						text: 'Say you are trying to guess the word "BREWS" and you guess "CHUNK". The N and the H on the keyboard are one square away from the letter "B" that\'s in the solution, so they light up pretty bright. "K", "C" and "U" are two away from "B", so they light up, but a bit dimmer.',
+					},
+					// {
+					// 	keys: [
+					// 		["F", "G", "H", "J", "K"],
+					// 		["C", "V", "B", "N", "M"],
+					// 	],
+					// 	keyboardModel: keyboardModel,
+					// 	solution: "BREWS",
+					// },
+					{
+						fullKeyboard: true,
 						keyboardModel: keyboardModel,
 						solution: "BREWS",
 					},
 					{
-						text: 'Say you are trying to guess the word "BREWS" and you guess "CHUNK". The N and the H on the keyboard are one square away from the letter "B" that\'s in the solution, so they light up pretty bright. "K" and "C" are two away from "B", so they light up, but a bit dimmer.',
+						text: 'Your next guess is "BRINE". Now that you\'ve uncovered the "B", the letter "H", "N", "K", "U", and "I" are not close to an uncovered letter in the solution and have no more glow. The "C" is still two keys away from the letter "S", so it stays on!',
 					},
+					// {
+					// 	keys: [
+					// 		["F", "G", "H", "J", "K"],
+					// 		["C", "V", "B", "N", "M"],
+					// 	],
+					// 	keyboardModel: advancedKeyboardModel,
+					// 	solution: "BREWS",
+					// },
 					{
-						keys: [
-							["F", "G", "H", "J", "K"],
-							["C", "V", "B", "N", "M"],
-						],
-						keyboardModel: keyboardModel,
-						solution: "BREWS",
-					},
-					{
-						text: 'Your next guess is "BRINE". Now that you\'ve uncovered the "B", the letter "H", "N" and "K" are not close to an uncovered letter in the solution and have no more glow. The "C" is still two keys away from the letter "S", so it stays on!',
-					},
-					{
-						keys: [
-							["F", "G", "H", "J", "K"],
-							["C", "V", "B", "N", "M"],
-						],
+						fullKeyboard: true,
 						keyboardModel: advancedKeyboardModel,
 						solution: "BREWS",
 					},
@@ -270,14 +293,14 @@ export const About = ({ closeAbout }: Props) => {
 			<div className="flex flex-row gap-4">
 				<a
 					className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green"
-					href="https://github.com/kfishster/qwertle"
+					href={githubLink}
 				>
 					<p>Github</p>
 					<CodeIcon className="w-6 " />
 				</a>
 				<a
 					className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green"
-					href="https://github.com/kfishster/qwertle/issues"
+					href={`${githubLink}/issues`}
 				>
 					<p>Issues</p>
 					<AnnotationIcon className="w-6 " />

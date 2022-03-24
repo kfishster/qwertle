@@ -51,7 +51,7 @@ function getExampleState(): AppState {
 	appState.settings.showSubstrings = true;
 	appState.settings.numGuesses = 4;
 
-	// appState.modals.aboutOpen = true;
+	appState.modals.aboutOpen = true;
 
 	const guesses = ["STOCK"];
 	guesses.forEach((g) => {

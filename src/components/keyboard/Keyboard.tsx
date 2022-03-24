@@ -14,9 +14,9 @@ export function getKeyboardRow(row: string, rowNum: number, props: Props) {
 	return (
 		<div
 			key={rowNum}
-			className={`flex ${
+			className={`flex h-1/3 ${
 				rowNum === 1 ? "w-9/10" : "w-full"
-			} items-center justify-center gap-1 h-full`}
+			} items-center justify-center gap-1`}
 		>
 			{row.split("").map((letter, i) => {
 				if (letter === "-") {
@@ -70,7 +70,7 @@ export const Keyboard = (props: Props) => {
 	const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "-ZXCVBNM<"];
 
 	return (
-		<div className="flex flex-col gap-1 w-full md:w-3/4 px-4 h-full transition-all items-center">
+		<div className="flex flex-col flex-1 gap-1 w-full md:w-3/4 px-4 h-full transition-all items-center">
 			{keyboardRows.map((row, i) => getKeyboardRow(row, i, props))}
 		</div>
 	);
