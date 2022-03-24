@@ -38,7 +38,7 @@ function createShareMessage(isWinner: boolean, numGuesses: number, cluesUsed: nu
         `QWERTLE ${practice ? "" : `#${qwordleNum} `}${isWinner ? guesses.length : 'X'}/${numGuesses}${Array.from(Array(cluesUsed).keys()).map(c => '*').join("")}`,
         getSubtitle(cluesUsed), 
         ...solutionLines,
-        `https://tinyurl.com/4dhunvnk${practice ? `?p=${practiceHash}` : ""}`]
+        `https://qwertler.com${practice ? `?p=${practiceHash}` : ""}`]
 }
 
 export const Result = ({ game, settings, practice, closeResult }: Props) => {
