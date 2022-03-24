@@ -68,7 +68,7 @@ function getHashForDate(): number {
 function getGameStateWithSolution(solutionHash: number): GameState {
 	const solution =
 		wordleSolutions[solutionHash % wordleSolutions.length].toUpperCase();
-	// console.log(wordleSolutions.indexOf("email"))
+	console.log(wordleSolutions.indexOf("email"))
 	return {
 		dateHash: solutionHash,
 		solution: solution,

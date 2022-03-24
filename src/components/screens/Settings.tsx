@@ -42,7 +42,7 @@ export const Settings = ({
 }: Props) => {
 	const settingsEnabled = status !== GameStatus.PLAYING;
 	return (
-		<Modal close={closeSettings}>
+		<Modal close={closeSettings} height="h-1/3">
 			<div className="flex flex-col items-center gap-4 w-full">
 				<h1 className="text-2xl pb-8">/* SETTINGS */</h1>
 				{!settingsEnabled && (
