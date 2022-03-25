@@ -146,7 +146,7 @@ function getPracticeRound(): number | undefined {
 
 	if (practiceIdx != null) {
 		let number = Number(params.get("p"));
-		if (!isNaN(number)) {
+		if (!isNaN(number) && Number.isInteger(number)) {
 			return number;
 		}
 	}
