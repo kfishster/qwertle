@@ -30,6 +30,17 @@ import { Settings } from "./components/screens/Settings";
 import { Result } from "./components/screens/Result";
 import { About } from "./components/screens/About";
 import Div100vh from "react-div-100vh";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import { wordleSolutions } from "./components/models/Words";
+
+console.log(process.env);
+const appInsights = new ApplicationInsights({
+	config: {
+		instrumentationKey: process.env.REACT_APP_AZURE_APPLICATION_INSIGHTS_IKEY,
+	},
+});
+appInsights.loadAppInsights();
+appInsights.trackPageView();
 
 function getAppState(): AppState {
 	const game = getPersistentGameState();
@@ -68,73 +79,70 @@ function getExampleState(): AppState {
 	return appState;
 }
 
-// function getAlarmExample(): AppState {
-//   const solution = "ALARM";
-//   const appState = getDefaultAppState();
-
-//   // appState.settings.showKeyboardHeatmap = true;
-//   // appState.settings.showSubstrings = true;
-//   // appState.settings.numGuesses = 4;
-
-//   // // appState.modals.resultsOpen = true;
-
-//   // const guesses = ["SHEAR"];
-//   // guesses.forEach(g => {
-//   //   const guess = new Guess(g, solution);
-//   //   appState.game.guesses.push(guess);
-//   //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
-//   // })
-
-//   appState.game.solution = solution;
-//   appState.practice = true;
-
-//   // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
-//   // appState.game.status = GameStatus.WON;
-
-//   return appState;
-// }
-
-// function getSuiteExample(): AppState {
-//   const solution = "SUITE";
-//   const appState = getDefaultAppState();
-
-//   // appState.settings.showKeyboardHeatmap = true;
-//   // appState.settings.showSubstrings = true;
-//   // appState.settings.numGuesses = 4;
-
-//   appState.modals.aboutOpen = true;
-
-//   // const guesses = ["SHEAR"];
-//   // guesses.forEach(g => {
-//   //   const guess = new Guess(g, solution);
-//   //   appState.game.guesses.push(guess);
-//   //   appState.keyboard = addGuessToModel(appState.keyboard, guess);
-//   // })
-
-//   appState.game.solution = solution;
-//   appState.practice = false;
-
-//   // appState.game.currentGuess = ["A", "R", "M", "E", "D"];
-//   // appState.game.status = GameStatus.WON;
-
-//   return appState;
-// }
-
-async function sendStartedAnalytics(practice: boolean) {
-	await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
+function sendStartedAnalytics(
+	practice: boolean,
+	substringsOn: boolean,
+	heatmapOn: boolean
+) {
+	appInsights.trackEvent({
+		name: "StartedGame",
+		properties: {
+			practice: practice,
+			heatmapOn: heatmapOn,
+			substringsOn: substringsOn,
+		},
+	});
+	// await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
 }
 
-async function sendFinishedGameAnalytics(
+function sendFinishedGameAnalytics(
 	practice: boolean,
 	substringsOn: boolean,
 	heatmapOn: boolean,
-	hasWon: boolean
+	hasWon: boolean,
+	guesses: string[],
+	solution: string,
+	hash: number
 ) {
-	await fetch(
-		`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
-			substringsOn ? "1" : "0"
-		}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
-	);
+	appInsights.trackEvent({
+		name: "FinishedGame",
+		properties: {
+			practice: practice,
+			heatmapOn: heatmapOn,
+			substringsOn: substringsOn,
+			guesses: guesses,
+			solution: solution,
+			hasWon: hasWon,
+			hash: hash,
+		},
+	});
+	// await fetch(
+	// 	`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
+	// 		substringsOn ? "1" : "0"
+	// 	}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
+	// );
+}
+
+function triedIncorrectWord(
+	practice: boolean,
+	substringsOn: boolean,
+	heatmapOn: boolean,
+	weirdWord: string
+) {
+	appInsights.trackEvent({
+		name: "IncorrectWord",
+		properties: {
+			practice: practice,
+			heatmapOn: heatmapOn,
+			substringsOn: substringsOn,
+			word: weirdWord,
+		},
+	});
+	// await fetch(
+	// 	`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
+	// 		substringsOn ? "1" : "0"
+	// 	}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
+	// );
 }
 
 const showExampleGame = false;
@@ -146,7 +154,12 @@ function getPracticeRound(): number | undefined {
 
 	if (practiceIdx != null) {
 		let number = Number(params.get("p"));
-		if (!isNaN(number) && Number.isInteger(number)) {
+		if (
+			!isNaN(number) &&
+			Number.isInteger(number) &&
+			number >= 0 &&
+			number < wordleSolutions.length
+		) {
 			return number;
 		}
 	}
@@ -191,14 +204,27 @@ class App extends React.Component<{}, AppState> {
 				model.game.status === GameStatus.START &&
 				newGameState.game.status === GameStatus.PLAYING
 			) {
-				sendStartedAnalytics(newGameState.practice);
-			}
-			if (isGameFinished(newGameState.game.status)) {
+				sendStartedAnalytics(
+					newGameState.practice,
+					newGameState.settings.showSubstrings,
+					newGameState.settings.showKeyboardHeatmap
+				);
+			} else if (isGameFinished(newGameState.game.status)) {
 				sendFinishedGameAnalytics(
 					newGameState.practice,
 					newGameState.settings.showSubstrings,
 					newGameState.settings.showKeyboardHeatmap,
-					newGameState.game.status === GameStatus.WON
+					newGameState.game.status === GameStatus.WON,
+					newGameState.game.guesses,
+					newGameState.game.solution,
+					newGameState.game.dateHash
+				);
+			} else if (newGameState.showWordNotFound) {
+				triedIncorrectWord(
+					newGameState.practice,
+					newGameState.settings.showSubstrings,
+					newGameState.settings.showKeyboardHeatmap,
+					newGameState.game.currentGuess.join("")
 				);
 			}
 			this.setState(submitGuessToAppState(model));
