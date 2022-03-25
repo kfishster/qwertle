@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import { GameSettings, GameStatus } from "../models/AppState";
 import Toggle from "react-toggle";
-import "react-toggle/style.css";
 import { Modal } from "./Modal";
 
 type Props = {

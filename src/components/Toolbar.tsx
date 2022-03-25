@@ -6,7 +6,6 @@ import {
 	RefreshIcon,
 } from "@heroicons/react/outline";
 import Toggle from "react-toggle";
-import "react-toggle/style.css";
 import { getSubtitle } from "./models/AppState";
 
 type Props = {
