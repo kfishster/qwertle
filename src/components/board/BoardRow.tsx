@@ -121,7 +121,7 @@ export const BoardRow = ({
 								<BoardCell
 									key={i}
 									smallDemo={smallDemo}
-									currentGuessLetter={currentGuess.at(i)}
+									currentGuessLetter={currentGuess[i]}
 								/>
 							) : i === currentGuess.length ? (
 								<BoardCell

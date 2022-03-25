@@ -84,7 +84,7 @@ export const Result = ({ game, settings, practice, closeResult }: Props) => {
 	};
 
 	return (
-		<Modal close={closeResult} height="h-3/5">
+		<Modal close={closeResult} height="h-4/5 m:h-3/5">
 			<div className="flex flex-col items-center gap-2 w-full">
 				<h1 className="text-2xl pb-8">
 					{isWinner ? "GREAT JOB!!" : "BETTER LUCK NEXT TIME"}
