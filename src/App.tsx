@@ -121,7 +121,7 @@ function getExampleState(): AppState {
 // }
 
 async function sendStartedAnalytics(practice: boolean) {
-	await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
+	// await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
 }
 
 async function sendFinishedGameAnalytics(
@@ -130,11 +130,11 @@ async function sendFinishedGameAnalytics(
 	heatmapOn: boolean,
 	hasWon: boolean
 ) {
-	await fetch(
-		`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
-			substringsOn ? "1" : "0"
-		}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
-	);
+	// await fetch(
+	// 	`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
+	// 		substringsOn ? "1" : "0"
+	// 	}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
+	// );
 }
 
 const showExampleGame = false;
