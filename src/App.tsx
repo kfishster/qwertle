@@ -33,7 +33,6 @@ import Div100vh from "react-div-100vh";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 import { wordleSolutions } from "./components/models/Words";
 
-console.log(process.env);
 const appInsights = new ApplicationInsights({
 	config: {
 		instrumentationKey: process.env.REACT_APP_AZURE_APPLICATION_INSIGHTS_IKEY,
@@ -92,7 +91,6 @@ function sendStartedAnalytics(
 			substringsOn: substringsOn,
 		},
 	});
-	// await fetch(`/api/usage?started=1&practice=${practice ? "1" : "0"}`);
 }
 
 function sendFinishedGameAnalytics(
@@ -116,11 +114,6 @@ function sendFinishedGameAnalytics(
 			hash: hash,
 		},
 	});
-	// await fetch(
-	// 	`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
-	// 		substringsOn ? "1" : "0"
-	// 	}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
-	// );
 }
 
 function triedIncorrectWord(
@@ -138,11 +131,36 @@ function triedIncorrectWord(
 			word: weirdWord,
 		},
 	});
-	// await fetch(
-	// 	`/api/usage?finished=1&practice=${practice ? "1" : "0"}&substrings=${
-	// 		substringsOn ? "1" : "0"
-	// 	}&heatmap=${heatmapOn ? "1" : "0"}&hasWon=${hasWon ? "1" : "0"}`
-	// );
+}
+
+function openedAbout(
+	practice: boolean,
+	substringsOn: boolean,
+	heatmapOn: boolean
+) {
+	appInsights.trackEvent({
+		name: "OpenedAbout",
+		properties: {
+			practice: practice,
+			heatmapOn: heatmapOn,
+		},
+	});
+}
+
+function sendClickedShared(practice: boolean, hasWon: boolean) {
+	appInsights.trackEvent({
+		name: "ClickedShared",
+		properties: {
+			practice: practice,
+			hasWon: hasWon,
+		},
+	});
+}
+
+function openedGithub() {
+	appInsights.trackEvent({
+		name: "OpenedGithub",
+	});
 }
 
 const showExampleGame = false;
@@ -298,6 +316,11 @@ class App extends React.Component<{}, AppState> {
 		};
 
 		const openAbout = () => {
+			openedAbout(
+				model.practice,
+				model.settings.showSubstrings,
+				model.settings.showKeyboardHeatmap
+			);
 			this.setState({ ...model, modals: { ...model.modals, aboutOpen: true } });
 		};
 
@@ -341,6 +364,14 @@ class App extends React.Component<{}, AppState> {
 					practice: true,
 				});
 			}
+		};
+
+		const clickedShared = () => {
+			sendClickedShared(model.practice, model.game.status === GameStatus.WON);
+		};
+
+		const githubOpened = () => {
+			openedGithub();
 		};
 
 		const overlayOpen =
@@ -412,9 +443,12 @@ class App extends React.Component<{}, AppState> {
 							practice={model.practice}
 							settings={model.settings}
 							closeResult={closeResult}
+							clickedShared={clickedShared}
 						/>
 					)}
-					{model.modals.aboutOpen && <About closeAbout={closeAbout} />}
+					{model.modals.aboutOpen && (
+						<About closeAbout={closeAbout} githubOpened={githubOpened} />
+					)}
 				</div>
 			</Div100vh>
 		);

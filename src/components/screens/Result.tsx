@@ -16,6 +16,7 @@ type Props = {
 	settings: GameSettings;
 	practice: boolean;
 	closeResult: () => void;
+	clickedShared: () => void;
 };
 
 function emojiLineFromGuess(guess: Guess) {
@@ -59,7 +60,13 @@ function createShareMessage(
 	];
 }
 
-export const Result = ({ game, settings, practice, closeResult }: Props) => {
+export const Result = ({
+	game,
+	settings,
+	practice,
+	closeResult,
+	clickedShared,
+}: Props) => {
 	const [state, setState] = useState({ copied: false });
 
 	const isWinner = game.status === GameStatus.WON;
@@ -81,6 +88,7 @@ export const Result = ({ game, settings, practice, closeResult }: Props) => {
 			document.execCommand("copy", true, shareMessage.join("\n"));
 			setState({ copied: true });
 		}
+		clickedShared();
 	};
 
 	return (

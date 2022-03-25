@@ -68,8 +68,8 @@ function getHashForDate(): number {
 function getGameStateWithSolution(solutionHash: number): GameState {
 	const solution =
 		wordleSolutions[solutionHash % wordleSolutions.length].toUpperCase();
-	console.log(wordleSolutions.indexOf("email"))
-	return {
+
+        return {
 		dateHash: solutionHash,
 		solution: solution,
 		guesses: [],
@@ -193,7 +193,6 @@ export const submitGuessToAppState = (appState: AppState): AppState => {
 
 			if (!appState.practice) {
 				persistGameState(newGameState);
-				console.log("persisted");
 			}
 
 			return {
@@ -220,7 +219,7 @@ export function getGuesses(game: GameState): Guess[] {
 }
 
 export function persistGameState(game: GameState) {
-	console.log(JSON.stringify(game));
+	// console.log(JSON.stringify(game));
 	window.localStorage.setItem("game", JSON.stringify(game));
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { Guess } from "../models/Guess";
 import { BoardRow } from "../board/BoardRow";
 import { KeyboardKey } from "../keyboard/KeyboardKey";
@@ -12,6 +13,7 @@ import { Keyboard } from "../keyboard/Keyboard";
 
 type Props = {
 	closeAbout: () => void;
+	githubOpened: () => void;
 };
 
 type InstructionSectionProps = {
@@ -121,7 +123,7 @@ function keyboardKey(
 	);
 }
 
-export const About = ({ closeAbout }: Props) => {
+export const About = ({ closeAbout, githubOpened }: Props) => {
 	var keyboardModel = getDefaultKeyboardModel();
 	keyboardModel = addGuessToModel(keyboardModel, new Guess("CHUNK", "BREWS"));
 
@@ -297,6 +299,8 @@ export const About = ({ closeAbout }: Props) => {
 				<a
 					className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green"
 					href={githubLink}
+					target="_blank"
+					onClick={githubOpened}
 				>
 					<p>Github</p>
 					<CodeIcon className="w-6 " />
@@ -304,6 +308,8 @@ export const About = ({ closeAbout }: Props) => {
 				<a
 					className="flex flex-row border p-4 gap-3 items-center rounded-full border-mainframe-green"
 					href={`${githubLink}/issues`}
+					target="_blank"
+					onClick={githubOpened}
 				>
 					<p>Issues</p>
 					<AnnotationIcon className="w-6 " />

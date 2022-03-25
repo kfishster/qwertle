@@ -94,7 +94,7 @@ function getLetterBackground(
 		return Constants.inSolution;
 	} else if (hasBeenGuessed(model, letter)) {
 		const distance = proximityToSolution(model, letter, solution);
-		console.log(letter, distance);
+		// console.log(letter, distance);
 		if (showKeyboardHeatmap) {
 			if (distance <= Math.sqrt(2)) {
 				return Constants.keyboardClue1;
