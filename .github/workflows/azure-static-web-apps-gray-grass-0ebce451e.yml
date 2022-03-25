@@ -10,8 +10,7 @@ on:
       - main
 
 env:
-  REACT_APP_AZURE_APPLICATION_INSIGHTS_IKEY:
-    { { secrets.APPLICATION_INSIGHTS_IKEY } }
+  REACT_APP_AZURE_APPLICATION_INSIGHTS_IKEY: { { secrets.APPLICATION_INSIGHTS_IKEY } }
 
 jobs:
   build_and_deploy_job:
