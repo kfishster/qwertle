@@ -154,6 +154,9 @@ export const About = ({ closeAbout }: Props) => {
 					{
 						text: "Wordle rules apply, substrings are marked with yellow, reverse substrings in blue, used keyboard keys light up if they're close to the solution letters",
 					},
+					{
+						text: "Puzzles update daily!",
+					},
 				]}
 			/>
 
