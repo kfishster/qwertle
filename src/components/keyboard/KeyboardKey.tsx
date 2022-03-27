@@ -2,6 +2,7 @@ import { Constants } from "../Constants";
 import { KeyboardModel } from "../models/KeyboardModel";
 import { BackspaceIcon, ChevronDoubleUpIcon } from "@heroicons/react/outline";
 import { LetterGuess } from "../models/Guess";
+import { useState } from "react";
 
 type Props = {
 	letter: string;
@@ -144,12 +145,19 @@ export const KeyboardKey = ({
 	solution,
 	onPress,
 }: Props) => {
+	const [showKeyAnimation, setShowKeyAnimation] = useState(false);
+
+	const onKeyPress = () => {
+		onPress(letter);
+		setShowKeyAnimation(true);
+	};
+
 	return (
 		<button
 			className={`flex ${
 				isBackspace || isSubmit ? "flex-1 grow-[1.5]" : "flex-1 grow-1"
 			} h-full`}
-			onClick={() => onPress(letter)}
+			onClick={onKeyPress}
 		>
 			<div
 				className={`pointer-events-none md:pointer-events-auto flex flex-1 h-full justify-center items-center basis-1 border-2 font-mono rounded-md border-dotted font-semibold text-xl md:text-2xl ${
@@ -160,7 +168,10 @@ export const KeyboardKey = ({
 					showKeyboardHeatmap,
 					solution,
 					shadeOverride
-				)} ${getLetterColor(letter, model, solution, showKeyboardHeatmap)}`}
+				)} ${getLetterColor(letter, model, solution, showKeyboardHeatmap)} ${
+					showKeyAnimation ? "animate-fade" : ""
+				}`}
+				onAnimationEnd={() => setShowKeyAnimation(false)}
 			>
 				{isBackspace ? (
 					<BackspaceIcon className="h-1/2 w-3/4" />
